@@ -23,9 +23,19 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self openAlert];
+    
+    
     Movie *one = [data objectAtIndex:indexPath.row];
     cellNum = one.rowID;
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"영화 이름 바꾸기" message:@"영화 이름을 입력하세요" delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField *movieName = [alert textFieldAtIndex:0];
+    movieName.text=one.title;
+    [alert show];
+    
+    
 
 }
 
@@ -34,6 +44,7 @@
         
         //todo
         UITextField *movieName = [alertView textFieldAtIndex:0];
+        
         NSLog(@"%@",movieName.text);
         
         NSString *sql = [NSString stringWithFormat:@"UPDATE MOVIE SET TITLE = '%@' WHERE rowid = %d",movieName.text, (int)cellNum];
@@ -48,11 +59,6 @@
 
         
     }
-}
--(void)openAlert{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"영화 이름 바꾸기" message:@"영화 이름을 입력하세요" delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
 }
 
 
